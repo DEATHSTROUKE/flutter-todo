@@ -1,27 +1,19 @@
 part of 'todo_bloc.dart';
 
 class TodoState {
-  TodoState({required this.todoList});
+  TodoState({required this.todoList, required this.inputFieldIndex});
 
   final List<todoItem> todoList;
+  int inputFieldIndex = -1;
 
-  TodoState copyWith({List<todoItem>? todoList}) {
+  TodoState copyWith({List<todoItem>? todoList, int? inputFieldIndex}) {
     var list = todoList ?? this.todoList;
-    return TodoState(todoList: list);
+    var index = inputFieldIndex ?? this.inputFieldIndex;
+    return TodoState(todoList: list, inputFieldIndex: index);
   }
 }
 
-final this_list = <todoItem>[
-  todoItem(text: "Make todo", checked: true),
-  todoItem(text: "Add sql to app", checked: false),
-  todoItem(text: "Add sql to app", checked: true),
-  todoItem(text: "Push app to github", checked: false),
-  todoItem(
-      text:
-          "Ну привет, как дела, скажу я просто, тому парню, что в зеркале в полный рост. Кто ответит тебе на твоои вопросы и надо ли их задавать. Ну и пусть ты свои...",
-      checked: false),
-];
-
 class InitialTodoState extends TodoState {
-  InitialTodoState({List<todoItem>? list}) : super(todoList: list ?? this_list);
+  InitialTodoState({List<todoItem>? list})
+      : super(todoList: list ?? START_TODOS, inputFieldIndex: -1);
 }

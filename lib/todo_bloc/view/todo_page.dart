@@ -70,19 +70,31 @@ class TodoBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TodoBloc, TodoState>(builder: (context, state) {
       return Center(
-        child: ListView.builder(
-            itemCount: state.todoList.length,
-            itemBuilder: (context, index) =>
-                buildTasks(context, index, state.todoList[index])),
+        child: state.todoList.length > 0
+            ? ListView.builder(
+                itemCount: state.todoList.length,
+                itemBuilder: (context, index) =>
+                    buildTasks(context, index, state.todoList[index], state.inputFieldIndex))
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.thumb_up_alt_outlined, size: 50, color: mainColor),
+                  Text(
+                    'Todo List is empty',
+                    style: TextStyle(fontSize: 20, color: mainColor),
+                  ),
+                ],
+              ),
       );
     });
   }
 
-  TodoTile buildTasks(context, index, item) {
+  TodoTile buildTasks(context, index, item, inputFieldIndex) {
     return TodoTile(
       taskName: item.text,
       taskIndex: index,
       taskChecked: item.checked,
+      isFieldInput: inputFieldIndex == index,
     );
   }
 }
